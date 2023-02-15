@@ -1,7 +1,7 @@
 import { type } from "os";
 
-console.log("Hi Sebastian");
-console.log("Bye Sebastian");
+console.log("Hi Sebas");
+console.log("Bye Sebas");
 
 // This is a comment in TS
 
