@@ -1,4 +1,9 @@
-import { type } from "os";
+import {
+  deleteAllCookies,
+  deleteCookie,
+  getCookieValue,
+  setCookie,
+} from "cookies-utils";
 
 console.log("Hi Sebas");
 console.log("Bye Sebas");
@@ -439,16 +444,36 @@ function showError(error: string | number) {
 // 1. LocalStorage
 // Store the data in the browser (Data doesn't delete manually)
 
-function save(): void {
-  localStorage.set("name", "Sebas");
-}
+// function save(): void {
+//   localStorage.set("name", "Sebas");
+// }
 
-function read(): void {
-  let name = localStorage.get("name");
-}
+// function read(): void {
+//   let name = localStorage.get("name");
+// }
 
 // 2. SessionStorage
 // The difference is the time of the session in the browser
 
 // 3. Cookies
 //There is an expiration date and data in the URL
+
+const cookieOptions = {
+  name: "user", // string,
+  value: "Sebas", // string,
+  maxAge: 10 * 60, // optional number (value in seconds),
+  expires: new Date(2099, 10, 1), // optional Date,
+  path: "/", // optional string,
+};
+
+// Setting the Cookie
+setCookie(cookieOptions);
+
+// Get Cookie Value
+let readCookie = getCookieValue("user");
+
+// Delete
+deleteCookie("user");
+
+// Delete All Cookies
+deleteAllCookies();
