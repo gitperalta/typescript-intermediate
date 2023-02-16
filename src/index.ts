@@ -4,6 +4,9 @@ import {
   getCookieValue,
   setCookie,
 } from "cookies-utils";
+import { COURSES_ARRAY } from "./mock/courses.mock";
+import { Course } from "./models/Course";
+import { Student } from "./models/Student";
 
 console.log("Hi Sebas");
 console.log("Bye Sebas");
@@ -477,3 +480,40 @@ deleteCookie("user");
 
 // Delete All Cookies
 deleteAllCookies();
+
+// **CLasses
+
+// Let's create a course
+// const courseTS: Course = new Course("TypeScript", 15);
+// const courseJS: Course = new Course("JavaScript", 20);
+
+// const coursesArray: Course[] = [];
+
+// coursesArray.push(courseTS, courseJS); // [List of courses]
+
+// We use MOCK
+
+const coursesArray: Course[] = COURSES_ARRAY;
+
+// Let's create a Student
+const sebastian: Student = new Student("Sebastian", coursesArray, "Peralta");
+
+console.log(`${sebastian.name} studies:`);
+// We iterate on each one of them
+sebastian.courses.forEach((course: Course) => {
+  console.log(` - ${course.name} (${course.hours} hours)`); // - TypeScript (15 hours)
+});
+
+const courseAngular: Course = new Course("Angular", 40);
+
+sebastian.courses.push(courseAngular); // We add a course
+
+//Know the hours of studying
+
+sebastian.studiedHours; // number
+
+sebastian.studentId;
+
+// Know the instance of an object/variable
+// - typeof
+// - instanceof
