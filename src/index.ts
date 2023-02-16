@@ -5,7 +5,10 @@ import {
   setCookie,
 } from "cookies-utils";
 import { COURSES_ARRAY } from "./mock/courses.mock";
+import { Code } from "./models/Code";
 import { Course } from "./models/Course";
+import { ITodo, Level } from "./models/interfaces/ITodo";
+import { Boss, EmployeeExport } from "./models/Person";
 import { Student } from "./models/Student";
 
 console.log("Hi Sebas");
@@ -444,21 +447,29 @@ function showError(error: string | number) {
 
 // **Data Persistence
 
-// 1. LocalStorage
-// Store the data in the browser (Data doesn't delete manually)
+// 1. LocalStorage & SessionStorage
 
-// function save(): void {
-//   localStorage.set("name", "Sebas");
-// }
+function save(): void {
+  localStorage.set("name", "Sebas");
+  sessionStorage.set("name", "Sebas");
+}
 
-// function read(): void {
-//   let name = localStorage.get("name");
-// }
+function read(): void {
+  let name = localStorage.get("name");
+  let sessionName = sessionStorage.get("name");
+}
 
-// 2. SessionStorage
-// The difference is the time of the session in the browser
+function deleteItem(item: string): void {
+  localStorage.removeItem(item);
+  sessionStorage.removeItem(item);
+}
 
-// 3. Cookies
+function deleteAll(item: string): void {
+  localStorage.removeItem(item);
+  sessionStorage.removeItem(item);
+}
+
+// 2. Cookies
 //There is an expiration date and data in the URL
 
 const cookieOptions = {
@@ -517,3 +528,124 @@ sebastian.studentId;
 // Know the instance of an object/variable
 // - typeof
 // - instanceof
+
+let birthDay = new Date(1999, 7, 10);
+
+if (birthDay instanceof Date) console.log("It is an instance of Date");
+
+if (sebastian instanceof Student) console.log("Sebastian is an Student");
+
+// Inheritance & Polymorphism
+
+let employee1: EmployeeExport = new EmployeeExport(
+  "Sebas",
+  "Peralta",
+  23,
+  3500
+);
+let employee2: EmployeeExport = new EmployeeExport("Pepe", "Garcia", 21, 1500);
+let employee3: EmployeeExport = new EmployeeExport(
+  "Juan",
+  "Gonzales",
+  40,
+  2500
+);
+
+// employee1.sayHi(); // Persona's Inheritance
+
+let boss = new Boss("Pablo", "Garcia", 50);
+boss.employees.push(employee1, employee2, employee3);
+boss.employees.forEach((employee: EmployeeExport) => {
+  employee.sayHi();
+});
+
+employee1.sayHi(); // From Employee
+boss.sayHi(); // From Boss
+
+// **Interfaces
+let code: ITodo = {
+  title: "Code in TypeScript",
+  description: "Practice with Katas to learn how to develop with TypeScript",
+  completed: true,
+  urgency: Level.Urgent,
+  summary: function (): string {
+    return `${this.title} - ${this.completed}`;
+  },
+};
+
+console.log(code.summary());
+
+// Programing Todo (implements ITodo)
+
+let programingTS = new Code(
+  "TypeScript",
+  "TS programing todo",
+  false,
+  Level.Blocking
+);
+
+console.log(programingTS.summary());
+
+// **Experimental Decorators --> @
+
+// - Classes
+
+// - Parameters
+
+// - Methods
+
+// - Properties
+
+function Override(label: string) {
+  return function (target: any, key: string) {
+    Object.defineProperty(target, key, {
+      configurable: false,
+      get: () => label,
+    });
+  };
+}
+
+class DecoratorTest {
+  @Override("Test") // Calling Override function
+  name: string = "Sebas";
+}
+
+let test = new DecoratorTest();
+
+console.log(test.name); // Test
+
+// Another decorator function
+
+function OnlyReading(target: any, key: string) {
+  Object.defineProperty(target, key, {
+    writable: false,
+  });
+}
+
+class OnlyReadingTest {
+  @OnlyReading
+  name: string = "";
+}
+
+let readingTest = new OnlyReadingTest();
+readingTest.name = "Sebas";
+
+console.log(readingTest.name); // ==> Undefined (only reading)
+
+// Decorator for a method parameter
+function showPosition(
+  target: any,
+  propertyKey: string,
+  parameterIndex: number
+) {
+  console.log("Position", parameterIndex);
+}
+
+class MethodTest {
+  test(a: string, @showPosition b: boolean) {
+    console.log(b);
+  }
+}
+
+// We use the method with the parameter and the decorator
+new MethodTest().test("hello", false);
