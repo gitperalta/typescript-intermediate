@@ -41,6 +41,7 @@ build/Release
 node_modules/
 jspm_packages/
 .vscode/
+docs/
 
 # TypeScript v1 declaration files
 typings/
@@ -107,3 +108,4 @@ dist
 
 # package-lock.json
 package-lock.json
+.eslintrc.json

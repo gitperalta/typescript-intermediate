@@ -472,25 +472,25 @@ function deleteAll(item: string): void {
 // 2. Cookies
 //There is an expiration date and data in the URL
 
-const cookieOptions = {
-  name: "user", // string,
-  value: "Sebas", // string,
-  maxAge: 10 * 60, // optional number (value in seconds),
-  expires: new Date(2099, 10, 1), // optional Date,
-  path: "/", // optional string,
-};
+// const cookieOptions = {
+//   name: "user", // string,
+//   value: "Sebas", // string,
+//   maxAge: 10 * 60, // optional number (value in seconds),
+//   expires: new Date(2099, 10, 1), // optional Date,
+//   path: "/", // optional string,
+// };
 
-// Setting the Cookie
-setCookie(cookieOptions);
+// // Setting the Cookie
+// setCookie(cookieOptions);
 
-// Get Cookie Value
-let readCookie = getCookieValue("user");
+// // Get Cookie Value
+// let readCookie = getCookieValue("user");
 
-// Delete
-deleteCookie("user");
+// // Delete
+// deleteCookie("user");
 
-// Delete All Cookies
-deleteAllCookies();
+// // Delete All Cookies
+// deleteAllCookies();
 
 // **CLasses
 
@@ -551,16 +551,14 @@ let employee3: EmployeeExport = new EmployeeExport(
   2500
 );
 
-// employee1.sayHi(); // Persona's Inheritance
-
 let boss = new Boss("Pablo", "Garcia", 50);
 boss.employees.push(employee1, employee2, employee3);
+
+boss.sayHi(); // Persona's Inheritance
+
 boss.employees.forEach((employee: EmployeeExport) => {
   employee.sayHi();
 });
-
-employee1.sayHi(); // From Employee
-boss.sayHi(); // From Boss
 
 // **Interfaces
 let code: ITodo = {
@@ -596,56 +594,72 @@ console.log(programingTS.summary());
 
 // - Properties
 
-function Override(label: string) {
-  return function (target: any, key: string) {
-    Object.defineProperty(target, key, {
-      configurable: false,
-      get: () => label,
-    });
-  };
-}
+// function Override(label: string) {
+//   return function (target: any, key: string) {
+//     Object.defineProperty(target, key, {
+//       configurable: false,
+//       get: () => label,
+//     });
+//   };
+// }
 
-class DecoratorTest {
-  @Override("Test") // Calling Override function
-  name: string = "Sebas";
-}
+// class DecoratorTest {
+//   @Override("Test") // Calling Override function
+//   name: string = "Sebas";
+// }
 
-let test = new DecoratorTest();
+// let test = new DecoratorTest();
 
-console.log(test.name); // Test
+// console.log(test.name); // Test
 
-// Another decorator function
+// // Another decorator function
 
-function OnlyReading(target: any, key: string) {
-  Object.defineProperty(target, key, {
-    writable: false,
-  });
-}
+// function OnlyReading(target: any, key: string) {
+//   Object.defineProperty(target, key, {
+//     writable: false,
+//   });
+// }
 
-class OnlyReadingTest {
-  @OnlyReading
-  name: string = "";
-}
+// class OnlyReadingTest {
+//   @OnlyReading
+//   name: string = "";
+// }
 
-let readingTest = new OnlyReadingTest();
-readingTest.name = "Sebas";
+// let readingTest = new OnlyReadingTest();
+// readingTest.name = "Sebas";
 
-console.log(readingTest.name); // ==> Undefined (only reading)
+// console.log(readingTest.name); // ==> Undefined (only reading)
 
-// Decorator for a method parameter
-function showPosition(
-  target: any,
-  propertyKey: string,
-  parameterIndex: number
-) {
-  console.log("Position", parameterIndex);
-}
+// // Decorator for a method parameter
+// function showPosition(
+//   target: any,
+//   propertyKey: string,
+//   parameterIndex: number
+// ) {
+//   console.log("Position", parameterIndex);
+// }
 
-class MethodTest {
-  test(a: string, @showPosition b: boolean) {
-    console.log(b);
-  }
-}
+// class MethodTest {
+//   test(a: string, @showPosition b: boolean) {
+//     console.log(b);
+//   }
+// }
 
-// We use the method with the parameter and the decorator
-new MethodTest().test("hello", false);
+// // We use the method with the parameter and the decorator
+// new MethodTest().test("hello", false);
+
+// * CREATION PATTERNS
+
+// const myFirstSingleton = Singleton.getInstance();
+// const mySecondSingleton = Singleton.getInstance();
+
+// // Verify if both of them are equal
+// if (myFirstSingleton === mySecondSingleton) {
+//   console.log(
+//     "Singleton works correctly, both variables contains the same instance."
+//   );
+//   myFirstSingleton.showByConsole();
+//   mySecondSingleton.showByConsole();
+// } else {
+//   console.log("Singleton failed, variables contains different instances.");
+// }
